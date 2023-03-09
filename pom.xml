@@ -12,6 +12,8 @@
     <modules>
         <module>project-generator-core</module>
         <module>project-generator-sql</module>
+        <module>project-generator-sql-mybatisplus</module>
+        <module>project-generator-sql-annotations</module>
     </modules>
 
     <properties>

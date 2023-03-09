@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>project-generator-sql</artifactId>
+    <artifactId>project-generator-sql-mybatisplus</artifactId>
 
     <properties>
 
@@ -28,7 +28,7 @@
 
         <dependency>
             <groupId>com.xingray</groupId>
-            <artifactId>project-generator-sql-annotations</artifactId>
+            <artifactId>project-generator-sql</artifactId>
             <version>${project-generator.version}</version>
         </dependency>
 

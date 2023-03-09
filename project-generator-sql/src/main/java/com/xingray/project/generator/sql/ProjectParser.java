@@ -4,8 +4,6 @@ import com.github.javaparser.ParseResult;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.NodeList;
 import com.github.javaparser.ast.body.*;
-import com.github.javaparser.ast.expr.AnnotationExpr;
-import com.github.javaparser.ast.expr.SingleMemberAnnotationExpr;
 import com.github.javaparser.ast.type.ClassOrInterfaceType;
 import com.github.javaparser.ast.type.PrimitiveType;
 import com.github.javaparser.ast.type.Type;
@@ -15,13 +13,22 @@ import com.xingray.project.generator.sql.entity.ColumnType;
 import com.xingray.project.generator.sql.entity.Table;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ProjectParser {
 
-    public List<Table> parse(SourceRoot sourceRoot) {
+    public List<Table> parse(String path, TableParser tableParser) {
+        return parse(Path.of(path), tableParser);
+    }
+
+    public List<Table> parse(Path path, TableParser tableParser) {
+        return parse(new SourceRoot(path), tableParser);
+    }
+
+    private List<Table> parse(SourceRoot sourceRoot, TableParser tableParser) {
 
         List<Table> tables = new ArrayList<>();
 
@@ -40,74 +47,58 @@ public class ProjectParser {
                             continue;
                         }
 
-                        String name = classOrInterfaceDeclaration.getName().toString();
-                        if (name.endsWith("Model")) {
+                        if (tableParser.isMapToTable(classOrInterfaceDeclaration)) {
                             Table table = new Table();
-                            NodeList<AnnotationExpr> annotations = classOrInterfaceDeclaration.getAnnotations();
-                            for (AnnotationExpr annotation : annotations) {
-                                if (annotation instanceof SingleMemberAnnotationExpr singleMemberAnnotationExpr) {
-                                    if (singleMemberAnnotationExpr.getName().getIdentifier().equals("TableName")) {
-                                        String tableName = singleMemberAnnotationExpr.getMemberValue().asStringLiteralExpr().getValue();
-                                        table.setName(tableName);
-                                    }
-                                }
-                            }
-                            if (table.getName() == null) {
-                                table.setName(name);
-                            }
+                            table.setName(tableParser.getTableName(classOrInterfaceDeclaration));
 
                             NodeList<BodyDeclaration<?>> members = classOrInterfaceDeclaration.getMembers();
                             for (BodyDeclaration<?> bodyDeclaration : members) {
                                 if (bodyDeclaration instanceof FieldDeclaration fieldDeclaration) {
+                                    boolean isNullable = tableParser.isNullable(fieldDeclaration);
+                                    String defaultValue = tableParser.getDefaultValue(fieldDeclaration);
                                     NodeList<VariableDeclarator> variables = fieldDeclaration.getVariables();
+
                                     for (VariableDeclarator variable : variables) {
                                         String variableName = variable.getName().getIdentifier();
                                         Type variableType = variable.getType();
                                         Column column = new Column();
                                         column.setName(variableName);
+                                        column.setNullable(isNullable);
+                                        column.setDefaultValue(defaultValue);
+
 
                                         if (variableType instanceof ClassOrInterfaceType classOrInterfaceType) {
                                             String typeIdentifier = classOrInterfaceType.getName().getIdentifier();
-                                            System.out.println(variableName + " " + typeIdentifier);
                                             switch (typeIdentifier) {
                                                 case "Integer" -> {
                                                     column.setColumnType(ColumnType.INT);
-                                                    column.setNullable(true);
-                                                    column.setDefaultValue("NULL");
                                                 }
                                                 case "Long" -> {
                                                     column.setColumnType(ColumnType.BIG_INT);
-                                                    column.setNullable(true);
-                                                    column.setDefaultValue("NULL");
                                                 }
                                                 case "Double" -> {
                                                     column.setColumnType(ColumnType.DOUBLE);
-                                                    column.setNullable(true);
-                                                    column.setDefaultValue("NULL");
                                                 }
                                                 case "String" -> {
                                                     column.setColumnType(ColumnType.VARCHAR);
-                                                    column.setLength(100);
+                                                    column.setLength(tableParser.getVarcharColumnLength(fieldDeclaration));
                                                 }
                                             }
                                         } else if (variableType instanceof PrimitiveType primitiveType) {
                                             String primitiveTypeName = primitiveType.getType().asString();
-                                            System.out.println(variableName + " " + primitiveTypeName);
 
                                             switch (primitiveTypeName) {
                                                 case "int" -> {
                                                     column.setColumnType(ColumnType.INT);
-                                                    column.setNullable(false);
                                                 }
                                                 case "long" -> {
                                                     column.setColumnType(ColumnType.BIG_INT);
-                                                    column.setNullable(false);
                                                 }
                                                 case "double" -> {
                                                     column.setColumnType(ColumnType.DOUBLE);
-                                                    column.setNullable(false);
                                                 }
                                             }
+
                                         }
 
                                         table.addColumn(column);

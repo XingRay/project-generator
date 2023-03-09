@@ -103,7 +103,6 @@ public class MavenProjectGeneratorTest {
         mainMethod.addParameter(String[].class, "args");
 
         BlockStmt body = new BlockStmt();
-        StringLiteralExpr helloWorld = new StringLiteralExpr("hello world");
 
         ExpressionStmt statement = new ExpressionStmt();
         MethodCallExpr methodCallExpression = new MethodCallExpr();
@@ -141,28 +140,5 @@ public class MavenProjectGeneratorTest {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        // Add variable declaration
-//                            VariableDeclarator message = new VariableDeclarator(new ClassOrInterfaceType(String.class.getName()), "message", new StringLiteralExpr("Hello, world!"));
-//
-//                            // Add statement expression
-//                            ExpressionStmt println = new ExpressionStmt(new StringLiteralExpr("System.out.println(message);"));
-//
-//                            // Add statement block
-//                            BlockStmt block = new BlockStmt();
-//                            block.addStatement(new VariableDeclarator(PrimitiveType.intType(), "x", "5"));
-//                            block.addStatement(println);
-//                            block.addStatement(new ReturnStmt());
-//
-//                            // Add method declaration
-//                            body.addStatement(message);
-//                            new MethodDeclaration(
-//                                    EnumSet.of(Modifier.PUBLIC, Modifier.STATIC),
-//                                    new VoidType(),
-//                                    "main")
-//                                    .addParameter(
-//                                            new Parameter(PrimitiveType.intType().createArrayType(), "args"))
-//                                    .setBody(block)
-//                                    .addAndGetParameter(message));
     }
 }
