@@ -14,6 +14,7 @@
         <module>project-generator-sql</module>
         <module>project-generator-sql-mybatisplus</module>
         <module>project-generator-sql-annotations</module>
+        <module>project-generator-maven</module>
     </modules>
 
     <properties>
@@ -68,6 +69,24 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>1.4.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.14.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>2.13.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>2.14.2</version>
             </dependency>
 
         </dependencies>

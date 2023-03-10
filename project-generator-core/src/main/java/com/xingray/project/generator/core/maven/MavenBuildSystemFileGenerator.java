@@ -3,16 +3,16 @@ package com.xingray.project.generator.core.maven;
 import com.xingray.project.generator.core.entity.FileTreeNode;
 import com.xingray.project.generator.core.entity.Project;
 import com.xingray.project.generator.core.generator.BuildSystemFileGenerator;
-import com.xingray.project.generator.core.maven.entity.Build;
-import com.xingray.project.generator.core.maven.entity.Plugin;
-import com.xingray.project.generator.core.maven.entity.ProjectObjectModel;
 import com.xingray.project.generator.core.maven.plugins.MavenCompilerPlugin;
 import com.xingray.project.generator.core.maven.plugins.MavenJarPlugin;
+import com.xingray.project.generator.maven.entity.Build;
+import com.xingray.project.generator.maven.entity.Plugin;
+import com.xingray.project.generator.maven.entity.ProjectObjectModel;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
 public class MavenBuildSystemFileGenerator implements BuildSystemFileGenerator {
 
@@ -31,7 +31,7 @@ public class MavenBuildSystemFileGenerator implements BuildSystemFileGenerator {
         pom.setArtifactId(project.getArtifactId());
         pom.setVersion(project.getVersion());
 
-        HashMap<String, String> properties = new HashMap<>();
+        Properties properties = new Properties();
         properties.put("maven.compiler.source", "19");
         properties.put("maven.compiler.target", "19");
         properties.put("project.build.sourceEncoding", "UTF-8");

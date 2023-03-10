@@ -1,4 +1,4 @@
-package com.xingray.project.generator.core.maven.entity;
+package com.xingray.project.generator.maven.entity;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -6,9 +6,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import java.util.List;
 
 public class Build {
-//    @JacksonXmlProperty(localName = "plugin")
-@JacksonXmlElementWrapper(localName = "plugins")
-@JacksonXmlProperty(localName = "plugin")
+    //    @JacksonXmlProperty(localName = "plugin")
+    @JacksonXmlElementWrapper(localName = "plugins")
+    @JacksonXmlProperty(localName = "plugin")
     private List<Plugin> plugins;
 
     public List<Plugin> getPlugins() {

@@ -1,9 +1,11 @@
-package com.xingray.project.generator.core.maven.entity;
+package com.xingray.project.generator.maven.entity;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import java.util.Map;
+import java.util.List;
+import java.util.Properties;
 
 @JacksonXmlRootElement(localName = "project")
 public class ProjectObjectModel {
@@ -23,7 +25,19 @@ public class ProjectObjectModel {
     private String artifactId;
     private String version;
 
-    private Map<String, String> properties;
+    private String packaging;
+    private String name;
+    private String description;
+    private String url;
+
+    @JacksonXmlElementWrapper(localName = "models")
+    @JacksonXmlProperty(localName = "model")
+    private List<String> modules;
+
+    private List<Dependency> dependencies;
+    private DependencyManagement dependencyManagement;
+
+    private Properties properties;
 
     private Build build;
 
@@ -83,12 +97,12 @@ public class ProjectObjectModel {
         this.version = version;
     }
 
-    public Map<String, String> getProperties() {
-        return properties;
+    public String getPackaging() {
+        return packaging;
     }
 
-    public void setProperties(Map<String, String> properties) {
-        this.properties = properties;
+    public void setPackaging(String packaging) {
+        this.packaging = packaging;
     }
 
     public Build getBuild() {
@@ -97,6 +111,62 @@ public class ProjectObjectModel {
 
     public void setBuild(Build build) {
         this.build = build;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public List<String> getModules() {
+        return modules;
+    }
+
+    public void setModules(List<String> modules) {
+        this.modules = modules;
+    }
+
+    public List<Dependency> getDependencies() {
+        return dependencies;
+    }
+
+    public void setDependencies(List<Dependency> dependencies) {
+        this.dependencies = dependencies;
+    }
+
+    public DependencyManagement getDependencyManagement() {
+        return dependencyManagement;
+    }
+
+    public void setDependencyManagement(DependencyManagement dependencyManagement) {
+        this.dependencyManagement = dependencyManagement;
+    }
+
+    public Properties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Properties properties) {
+        this.properties = properties;
     }
 
     @Override
@@ -109,6 +179,13 @@ public class ProjectObjectModel {
                 ", groupId='" + groupId + '\'' +
                 ", artifactId='" + artifactId + '\'' +
                 ", version='" + version + '\'' +
+                ", packaging='" + packaging + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", modules=" + modules +
+                ", dependencies=" + dependencies +
+                ", dependencyManagement=" + dependencyManagement +
                 ", properties=" + properties +
                 ", build=" + build +
                 '}';

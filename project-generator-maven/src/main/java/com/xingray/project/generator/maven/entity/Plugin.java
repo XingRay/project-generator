@@ -1,4 +1,4 @@
-package com.xingray.project.generator.core.maven.entity;
+package com.xingray.project.generator.maven.entity;
 
 public class Plugin {
     private String groupId;

@@ -1,6 +1,7 @@
 package com.xingray.project.generator.core.maven.plugins;
 
-import com.xingray.project.generator.core.maven.entity.Plugin;
+
+import com.xingray.project.generator.maven.entity.Plugin;
 
 public class MavenCompilerPlugin extends Plugin {
     private Configuration configuration;

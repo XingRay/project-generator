@@ -28,7 +28,7 @@ public class ProjectGeneratorTest {
     public void helloWorldProjectGenerateTest() {
         Project project = new Project();
         project.setName("generator-test01");
-        project.setLocation("D:\\code\\workspace\\java");
+        project.setLocation(new File("src/test/resources").getAbsolutePath());
         project.setLanguage(Language.JAVA);
         project.setBuildSystem(BuildSystem.MAVEN);
         project.setGroupId("com.xingray");

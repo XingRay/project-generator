@@ -7,10 +7,10 @@ module com.xingray.project.generator.core {
     requires com.github.javaparser.core;
     requires com.github.javaparser.symbolsolver.core;
 
+    requires com.xingray.project.generator.maven;
     requires com.xingray.java.util;
 
     exports com.xingray.project.generator.core.entity;
-    exports com.xingray.project.generator.core.maven.entity;
     exports com.xingray.project.generator.core.generator;
     exports com.xingray.project.generator.core.generator.impl;
     exports com.xingray.project.generator.core.maven;
