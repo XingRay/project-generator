@@ -50,5 +50,16 @@
             <artifactId>javaparser-symbol-solver-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.xingray</groupId>
+            <artifactId>java-util</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.xingray</groupId>
+            <artifactId>java-command</artifactId>
+            <version>1.0.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

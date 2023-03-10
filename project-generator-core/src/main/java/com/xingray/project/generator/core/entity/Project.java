@@ -9,6 +9,8 @@ public class Project {
     private String artifactId;
     private String version;
 
+    private String mainClass;
+
     public String getName() {
         return name;
     }
@@ -65,6 +67,14 @@ public class Project {
         this.version = version;
     }
 
+    public String getMainClass() {
+        return mainClass;
+    }
+
+    public void setMainClass(String mainClass) {
+        this.mainClass = mainClass;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
@@ -75,6 +85,7 @@ public class Project {
                 ", groupId='" + groupId + '\'' +
                 ", artifactId='" + artifactId + '\'' +
                 ", version='" + version + '\'' +
+                ", mainClass='" + mainClass + '\'' +
                 '}';
     }
 }

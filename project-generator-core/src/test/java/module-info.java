@@ -10,5 +10,8 @@ module com.xingray.java.project.generator.test {
     requires com.github.javaparser.core;
     requires com.github.javaparser.symbolsolver.core;
 
+    requires com.xingray.java.command;
+    requires com.xingray.java.util;
+
     exports com.xingray.project.generator.core.test;
 }

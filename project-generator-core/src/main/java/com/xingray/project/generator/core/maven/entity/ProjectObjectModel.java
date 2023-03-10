@@ -25,6 +25,8 @@ public class ProjectObjectModel {
 
     private Map<String, String> properties;
 
+    private Build build;
+
     public String getXmlns() {
         return xmlns;
     }
@@ -89,6 +91,14 @@ public class ProjectObjectModel {
         this.properties = properties;
     }
 
+    public Build getBuild() {
+        return build;
+    }
+
+    public void setBuild(Build build) {
+        this.build = build;
+    }
+
     @Override
     public String toString() {
         return "ProjectObjectModel{" +
@@ -100,6 +110,7 @@ public class ProjectObjectModel {
                 ", artifactId='" + artifactId + '\'' +
                 ", version='" + version + '\'' +
                 ", properties=" + properties +
+                ", build=" + build +
                 '}';
     }
 }

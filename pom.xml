@@ -45,6 +45,12 @@
                 <version>${java-parser.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.xingray</groupId>
+                <artifactId>java-util</artifactId>
+                <version>1.0.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>
