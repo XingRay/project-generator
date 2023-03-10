@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.xingray.java.command.CommandExecutor;
-import com.xingray.java.command.CommandResult;
 import com.xingray.java.command.JavaRuntimeCommandExecutor;
+import com.xingray.java.command.SimpleExecuteListener;
 import com.xingray.java.util.SystemUtil;
 import com.xingray.project.generator.core.entity.BuildSystem;
 import com.xingray.project.generator.core.entity.FileTreeNode;
@@ -59,14 +59,24 @@ public class ProjectGeneratorTest {
     private static void makeAndRun(Project project) {
         CommandExecutor executor = new JavaRuntimeCommandExecutor();
         try {
-            String cmd = SystemUtil.isRunOnWindows() ? "mvn.cmd clean package" : "mvn clean package";
+            String mvn = "mvn" + (SystemUtil.isRunOnWindows() ? ".cmd" : "");
             File projectRootFile = new File(project.getLocation(), project.getName());
-            CommandResult result01 = executor.execute(cmd, projectRootFile);
-            System.out.println(result01);
+
+            int resultValue = executor.execute(mvn + " clean package", projectRootFile);
+            assert resultValue == 0;
+
             String jarFileName = project.getArtifactId() + "-" + project.getVersion() + ".jar";
-            CommandResult result02 = executor.execute("java -jar " + jarFileName, new File(projectRootFile, "target"));
-            System.out.println(result02);
-            assert result02.getResultStringList().get(0).equals("hello world");
+            resultValue = executor.execute("java -jar " + jarFileName, new File(projectRootFile, "target"), new SimpleExecuteListener() {
+                @Override
+                public void out(String line) {
+                    assert line.equals("hello world");
+                }
+            });
+            assert resultValue == 0;
+
+            resultValue = executor.execute(mvn + " clean");
+            assert resultValue == 0;
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

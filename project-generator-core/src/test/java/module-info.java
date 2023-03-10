@@ -13,5 +13,7 @@ module com.xingray.java.project.generator.test {
     requires com.xingray.java.command;
     requires com.xingray.java.util;
 
+    requires org.slf4j;
+
     exports com.xingray.project.generator.core.test;
 }

@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project-generator.version>${project.version}</project-generator.version>
         <java-parser.version>3.25.0</java-parser.version>
+        <java-common.version>1.0.0</java-common.version>
     </properties>
 
     <dependencyManagement>
@@ -48,7 +49,25 @@
             <dependency>
                 <groupId>com.xingray</groupId>
                 <artifactId>java-util</artifactId>
-                <version>1.0.0</version>
+                <version>${java-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xingray</groupId>
+                <artifactId>java-command</artifactId>
+                <version>${java-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>2.0.5</version>
+            </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.4.5</version>
             </dependency>
 
         </dependencies>
