@@ -3,16 +3,10 @@ package com.xingray.project.generator.core.maven;
 import com.xingray.project.generator.core.entity.FileTreeNode;
 import com.xingray.project.generator.core.entity.Project;
 import com.xingray.project.generator.core.generator.BuildSystemFileGenerator;
-import com.xingray.project.generator.core.maven.plugins.MavenCompilerPlugin;
-import com.xingray.project.generator.core.maven.plugins.MavenJarPlugin;
-import com.xingray.project.generator.maven.entity.Build;
 import com.xingray.project.generator.maven.entity.Plugin;
 import com.xingray.project.generator.maven.entity.ProjectObjectModel;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 
 public class MavenBuildSystemFileGenerator implements BuildSystemFileGenerator {
 
@@ -26,28 +20,19 @@ public class MavenBuildSystemFileGenerator implements BuildSystemFileGenerator {
     public FileTreeNode generatorBuildSystemFile(Project project) {
         File projectRootFile = new File(project.getLocation(), project.getName());
         File pomFile = new File(projectRootFile, "pom.xml");
-        ProjectObjectModel pom = new ProjectObjectModel();
-        pom.setGroupId(project.getGroupId());
-        pom.setArtifactId(project.getArtifactId());
-        pom.setVersion(project.getVersion());
 
-        Properties properties = new Properties();
-        properties.put("maven.compiler.source", "19");
-        properties.put("maven.compiler.target", "19");
-        properties.put("project.build.sourceEncoding", "UTF-8");
-        pom.setProperties(properties);
+        ProjectObjectModel pom = ProjectObjectModel.ofGav(project.getGav());
+        pom.addProperty("maven.compiler.source", "19")
+                .addProperty("maven.compiler.target", "19")
+                .addProperty("project.build.sourceEncoding", "UTF-8");
 
-        Build build = new Build();
-        pom.setBuild(build);
-
-        List<Plugin> plugins = new ArrayList<>();
-        build.setPlugins(plugins);
-
-        MavenCompilerPlugin mavenCompilerPlugin = new MavenCompilerPlugin();
-        plugins.add(mavenCompilerPlugin);
-
-        MavenJarPlugin mavenJarPlugin = new MavenJarPlugin(project.getMainClass());
-        plugins.add(mavenJarPlugin);
+        pom.build().addPlugin(Plugin.ofGav("org.apache.maven.plugins:maven-jar-plugin:3.3.0")
+                .configuration()
+                .addAndGetChild("archive")
+                .addAndGetChild("manifest")
+                .put("addClasspath", true)
+                .put("mainClass", project.getMainClass())
+                .plugin());
 
         String xml = xmlConverter.objectToXml(pom);
 

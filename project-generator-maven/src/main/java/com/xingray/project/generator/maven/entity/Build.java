@@ -3,6 +3,7 @@ package com.xingray.project.generator.maven.entity;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Build {
@@ -24,5 +25,17 @@ public class Build {
         return "Build{" +
                 "plugins=" + plugins +
                 '}';
+    }
+
+    public List<Plugin> plugins() {
+        if (plugins == null) {
+            plugins = new ArrayList<>();
+        }
+        return plugins;
+    }
+
+    public Build addPlugin(Plugin plugin) {
+        plugins().add(plugin);
+        return this;
     }
 }

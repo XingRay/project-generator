@@ -116,6 +116,10 @@ public class FileTreeNode {
     }
 
     public void write() throws IOException {
+        File parentDir = file.getParentFile();
+        if (!parentDir.exists()) {
+            parentDir.mkdirs();
+        }
         FileUtil.deleteFileRecursive(file);
 
         if (isNode()) {

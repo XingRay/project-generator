@@ -1,5 +1,6 @@
 package com.xingray.project.generator.maven.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Properties;
 
 @JacksonXmlRootElement(localName = "project")
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"schemaLocation"})
 public class ProjectObjectModel {
 
     @JacksonXmlProperty(isAttribute = true, localName = "xmlns")
@@ -189,5 +191,37 @@ public class ProjectObjectModel {
                 ", properties=" + properties +
                 ", build=" + build +
                 '}';
+    }
+
+    public ProjectObjectModel() {
+    }
+
+    public ProjectObjectModel(String groupId, String artifactId, String version) {
+        this.groupId = groupId;
+        this.artifactId = artifactId;
+        this.version = version;
+    }
+
+    public static ProjectObjectModel ofGav(String[] gav) {
+        return new ProjectObjectModel(gav[0], gav[1], gav[2]);
+    }
+
+    public static ProjectObjectModel ofGav(String gav) {
+        return ofGav(gav.split(":"));
+    }
+
+    public ProjectObjectModel addProperty(String key, String value) {
+        if (properties == null) {
+            properties = new Properties();
+        }
+        properties.put(key, value);
+        return this;
+    }
+
+    public Build build() {
+        if (build == null) {
+            build = new Build();
+        }
+        return build;
     }
 }

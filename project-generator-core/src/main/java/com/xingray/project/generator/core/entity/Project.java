@@ -88,4 +88,25 @@ public class Project {
                 ", mainClass='" + mainClass + '\'' +
                 '}';
     }
+
+    public String[] getGav() {
+        return new String[]{groupId, artifactId, version};
+    }
+
+    public Project() {
+    }
+
+    public Project(String groupId, String artifactId, String version) {
+        this.groupId = groupId;
+        this.artifactId = artifactId;
+        this.version = version;
+    }
+
+    public static Project ofGav(String[] gav) {
+        return new Project(gav[0], gav[1], gav[2]);
+    }
+
+    public static Project ofGav(String gav) {
+        return ofGav(gav.split(":"));
+    }
 }

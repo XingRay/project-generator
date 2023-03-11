@@ -11,7 +11,6 @@ module com.xingray.java.project.generator.test {
     requires com.github.javaparser.symbolsolver.core;
 
     requires com.xingray.java.command;
-    requires com.xingray.java.util;
 
     requires org.slf4j;
 

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.xingray.java.command.CommandExecutor;
 import com.xingray.java.command.JavaRuntimeCommandExecutor;
 import com.xingray.java.command.SimpleExecuteListener;
-import com.xingray.java.util.SystemUtil;
 import com.xingray.project.generator.core.entity.BuildSystem;
 import com.xingray.project.generator.core.entity.FileTreeNode;
 import com.xingray.project.generator.core.entity.Language;
@@ -28,7 +27,7 @@ public class ProjectGeneratorTest {
     public void helloWorldProjectGenerateTest() {
         Project project = new Project();
         project.setName("generator-test01");
-        project.setLocation(new File("src/test/resources").getAbsolutePath());
+        project.setLocation(new File("src/test/output").getAbsolutePath());
         project.setLanguage(Language.JAVA);
         project.setBuildSystem(BuildSystem.MAVEN);
         project.setGroupId("com.xingray");
@@ -59,10 +58,9 @@ public class ProjectGeneratorTest {
     private static void makeAndRun(Project project) {
         CommandExecutor executor = new JavaRuntimeCommandExecutor();
         try {
-            String mvn = "mvn" + (SystemUtil.isRunOnWindows() ? ".cmd" : "");
             File projectRootFile = new File(project.getLocation(), project.getName());
 
-            int resultValue = executor.execute(mvn + " clean package", projectRootFile);
+            int resultValue = executor.execute("mvn clean package", projectRootFile);
             assert resultValue == 0;
 
             String jarFileName = project.getArtifactId() + "-" + project.getVersion() + ".jar";
@@ -74,7 +72,7 @@ public class ProjectGeneratorTest {
             });
             assert resultValue == 0;
 
-            resultValue = executor.execute(mvn + " clean");
+            resultValue = executor.execute("mvn clean", projectRootFile);
             assert resultValue == 0;
 
         } catch (Exception e) {

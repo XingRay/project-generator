@@ -15,5 +15,4 @@ module com.xingray.project.generator.core {
     exports com.xingray.project.generator.core.generator.impl;
     exports com.xingray.project.generator.core.maven;
     exports com.xingray.project.generator.core.gradle;
-    exports com.xingray.project.generator.core.maven.plugins;
 }
