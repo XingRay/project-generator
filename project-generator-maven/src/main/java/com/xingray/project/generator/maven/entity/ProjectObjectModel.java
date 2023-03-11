@@ -1,6 +1,7 @@
 package com.xingray.project.generator.maven.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
@@ -10,6 +11,7 @@ import java.util.Properties;
 
 @JacksonXmlRootElement(localName = "project")
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"schemaLocation"})
+@JsonPropertyOrder({"modelVersion", "groupId", "artifactId", "version", "properties", "dependencyManagement", "dependencies", "build"})
 public class ProjectObjectModel {
 
     @JacksonXmlProperty(isAttribute = true, localName = "xmlns")
@@ -36,6 +38,8 @@ public class ProjectObjectModel {
     @JacksonXmlProperty(localName = "model")
     private List<String> modules;
 
+    @JacksonXmlElementWrapper(localName = "dependencies")
+    @JacksonXmlProperty(localName = "dependency")
     private List<Dependency> dependencies;
     private DependencyManagement dependencyManagement;
 

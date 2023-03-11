@@ -1,13 +1,22 @@
 package com.xingray.project.generator.maven.entity;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+import java.util.*;
 
 public class Plugin {
     private String groupId;
     private String artifactId;
     private String version;
     private Map<String, Object> configuration;
+
+    @JacksonXmlElementWrapper(localName = "executions")
+    @JacksonXmlProperty(localName = "execution")
+    private List<Execution> executions;
+
+    public Plugin() {
+    }
 
     public Plugin(String groupId, String artifactId, String version) {
         this.groupId = groupId;
@@ -47,6 +56,14 @@ public class Plugin {
         this.configuration = configuration;
     }
 
+    public List<Execution> getExecutions() {
+        return executions;
+    }
+
+    public void setExecutions(List<Execution> executions) {
+        this.executions = executions;
+    }
+
     @Override
     public String toString() {
         return "Plugin{" +
@@ -54,6 +71,7 @@ public class Plugin {
                 ", artifactId='" + artifactId + '\'' +
                 ", version='" + version + '\'' +
                 ", configuration=" + configuration +
+                ", executions=" + executions +
                 '}';
     }
 
@@ -67,6 +85,18 @@ public class Plugin {
             configuration = new HashMap<>();
         }
         return new Configuration(this, null, configuration);
+    }
+
+    public Plugin addExecution(String phase, String... goals) {
+        if (executions == null) {
+            executions = new ArrayList<>();
+        }
+        Execution execution = new Execution();
+        execution.setPhase(phase);
+        execution.setGoals(Arrays.asList(goals));
+        executions.add(execution);
+
+        return this;
     }
 
     public static class Configuration {
