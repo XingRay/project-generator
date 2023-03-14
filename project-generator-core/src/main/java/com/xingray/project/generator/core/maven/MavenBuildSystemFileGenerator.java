@@ -1,10 +1,10 @@
 package com.xingray.project.generator.core.maven;
 
+import com.xingray.java.maven.core.model.Plugin;
+import com.xingray.java.maven.core.model.ProjectObjectModel;
 import com.xingray.project.generator.core.entity.FileTreeNode;
 import com.xingray.project.generator.core.entity.Project;
 import com.xingray.project.generator.core.generator.BuildSystemFileGenerator;
-import com.xingray.project.generator.maven.entity.Plugin;
-import com.xingray.project.generator.maven.entity.ProjectObjectModel;
 
 import java.io.File;
 

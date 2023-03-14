@@ -24,8 +24,8 @@
 
         <dependency>
             <groupId>com.xingray</groupId>
-            <artifactId>project-generator-maven</artifactId>
-            <version>${project-generator.version}</version>
+            <artifactId>java-maven-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

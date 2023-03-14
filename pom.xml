@@ -14,7 +14,6 @@
         <module>project-generator-sql</module>
         <module>project-generator-sql-mybatisplus</module>
         <module>project-generator-sql-annotations</module>
-        <module>project-generator-maven</module>
     </modules>
 
     <properties>
@@ -24,6 +23,7 @@
         <project-generator.version>${project.version}</project-generator.version>
         <java-parser.version>3.25.0</java-parser.version>
         <java-common.version>1.0.0</java-common.version>
+        <java-maven.version>1.0.0</java-maven.version>
     </properties>
 
     <dependencyManagement>
@@ -57,6 +57,12 @@
                 <groupId>com.xingray</groupId>
                 <artifactId>java-command</artifactId>
                 <version>${java-common.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.xingray</groupId>
+                <artifactId>java-maven-core</artifactId>
+                <version>${java-maven.version}</version>
             </dependency>
 
             <dependency>
